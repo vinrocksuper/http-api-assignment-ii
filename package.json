@@ -1,0 +1,26 @@
+{
+  "name": "http-api-assignment-ii",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"Tests completed \""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinrocksuper/http-api-assignment-ii.git"
+  },
+  "author": "Vincent Li",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vinrocksuper/http-api-assignment-ii/issues"
+  },
+  "devDependencies": {
+    "eslint": "^8.23.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0"
+  },
+  "homepage": "https://github.com/vinrocksuper/http-api-assignment-ii#readme"
+}

@@ -1,5 +1,7 @@
 const url = require('url'); // url module
 
+const users = {};
+
 // function to respond with a json object
 // takes request, response, status code and object to send
 const respondJSON = (request, response, status, object) => {
@@ -9,7 +11,7 @@ const respondJSON = (request, response, status, object) => {
     'Content-Type': 'application/json',
   };
 
-  console.log(object);
+  // console.log(object);
   // send response with json object
   response.writeHead(status, headers);
   response.write(JSON.stringify(object));
@@ -34,6 +36,7 @@ const getData = (request, response) => {
   // json object to send
   const responseJSON = {
     message: ' This is a successful response',
+    users: users
   };
 
   // return 200 with message
@@ -81,6 +84,33 @@ const getDataMeta = (request, response) => {
   respondJSONMeta(request, response, 200);
 };
 
+const addUser = async (request,response,body) => {
+   const responseJSON = {
+    message: 'Name and age are both required.',
+  };
+
+  if(!body.age || !body.name){
+    responseJSON.id = 'missingParams';
+    return respondJSON(request,response,400,responseJSON);
+  }
+
+  let responseCode = 204; // updated by default
+
+  if(!users[body.name]){
+    responseCode = 201;
+    users[body.name] = {}; // creates a new user if not already made
+  }
+
+  users[body.name].name = body.name;
+  users[body.name].age = body.age;
+
+  if(responseCode === 201){
+    responseJSON.message = 'user created successfully';
+    return respondJSON(request,response,responseCode,responseJSON);
+  }
+  respondJSONMeta(request,response,responseCode);
+}
+
 // set public modules
 module.exports = {
   getData,
@@ -89,4 +119,5 @@ module.exports = {
   notFoundMeta,
   badRequestHandler,
   badRequestHandlerMeta,
+  addUser,
 };

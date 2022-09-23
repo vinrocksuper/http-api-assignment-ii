@@ -36,7 +36,7 @@ const getData = (request, response) => {
   // json object to send
   const responseJSON = {
     message: ' This is a successful response',
-    users: users
+    users,
   };
 
   // return 200 with message
@@ -84,19 +84,19 @@ const getDataMeta = (request, response) => {
   respondJSONMeta(request, response, 200);
 };
 
-const addUser = async (request,response,body) => {
-   const responseJSON = {
+const addUser = async (request, response, body) => {
+  const responseJSON = {
     message: 'Name and age are both required.',
   };
 
-  if(!body.age || !body.name){
+  if (!body.age || !body.name) {
     responseJSON.id = 'missingParams';
-    return respondJSON(request,response,400,responseJSON);
+    return respondJSON(request, response, 400, responseJSON);
   }
 
   let responseCode = 204; // updated by default
 
-  if(!users[body.name]){
+  if (!users[body.name]) {
     responseCode = 201;
     users[body.name] = {}; // creates a new user if not already made
   }
@@ -104,12 +104,12 @@ const addUser = async (request,response,body) => {
   users[body.name].name = body.name;
   users[body.name].age = body.age;
 
-  if(responseCode === 201){
+  if (responseCode === 201) {
     responseJSON.message = 'user created successfully';
-    return respondJSON(request,response,responseCode,responseJSON);
+    return respondJSON(request, response, responseCode, responseJSON);
   }
-  respondJSONMeta(request,response,responseCode);
-}
+  return respondJSONMeta(request, response, responseCode);
+};
 
 // set public modules
 module.exports = {
